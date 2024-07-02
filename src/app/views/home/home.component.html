@@ -21,7 +21,7 @@
       <!-- loader -->
       <div class="w-full h-full fixed top-0 left-0 bg-white opacity-75 z-50">
         <div class="flex justify-center items-center mt-[50vh]">
-          <div class="rounded-full h-10 w-10 bg-violet-800 animate-ping"></div>
+          <div class="rounded-full h-20 w-20 bg-violet-800 animate-ping"></div>
         </div>
       </div>
       }
@@ -36,7 +36,8 @@
     <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
       @for(product of products; track product.product_id){
       @if(IsFilter?.category_id !== null && IsFilter?.category_id == product.category_id){
-      <a routerLink="/detail" [state]="{product}" class="group bg-gray-100 aspect-h-1 aspect-w-1 rounded p-3">
+      <a routerLink="/detail" (click)="increment($event , product)"
+        class="group bg-gray-100 aspect-h-1 aspect-w-1 rounded p-3">
         <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
           <img src="{{product.images[0].image_url}}"
             alt="Hand holding black machined steel mechanical pencil with brass tip and top."
@@ -47,7 +48,8 @@
       </a>
       }
       @else if(IsFilter?.category_id == null){
-      <a [routerLink]="['/detail',  {data : product}]" class="group bg-gray-100 aspect-h-1 aspect-w-1 rounded p-3">
+      <a routerLink="/detail" (click)="increment($event , product)"
+        class="group bg-gray-100 aspect-h-1 aspect-w-1 rounded p-3">
         <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
           <img src="{{product.images[0].image_url}}"
             alt="Hand holding black machined steel mechanical pencil with brass tip and top."

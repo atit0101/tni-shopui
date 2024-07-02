@@ -1,15 +1,23 @@
 import { Component, inject } from '@angular/core';
-import { CategoryService } from "../services/category.service";
-import { environments } from '../../environments/environments';
-import { ProductService } from '../services/product.service';
-import { ImageService } from '../services/image.service';
+import { CategoryService } from "../../services/category.service";
+import { environments } from '../../../environments/environments';
+import { ProductService } from '../../services/product.service';
+import { ImageService } from '../../services/image.service';
 import { NgIf, NgClass } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { IProduct } from '../../interfaces/product';
+import { Observable } from 'rxjs';
+import { addProduct, decrement, reset } from '../../store/actions';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgIf, NgClass, RouterLink],
+  imports: [
+    NgIf,
+    NgClass,
+    RouterLink,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -22,9 +30,13 @@ export class HomeComponent {
   private categoryService = inject(CategoryService);
   private productService = inject(ProductService);
   private imageService = inject(ImageService);
+  private product$: Observable<IProduct>;
 
-  constructor(private route: ActivatedRoute) {
-
+  constructor(
+    private route: ActivatedRoute,
+    private store: Store<{ product: IProduct; }>
+  ) {
+    this.product$ = store.select('product');
   }
 
   ngOnInit() {
@@ -58,7 +70,7 @@ export class HomeComponent {
           let f = this.images.filter((i: any) => i.product_id === e.product_id);
           e.images = f;
         });
-        console.log(this.products);
+        // console.log(this.products);
 
       },
       error: (error) => {
@@ -73,8 +85,13 @@ export class HomeComponent {
     } else {
       [this.IsFilter] = this.categorys.filter(c => c.category_name == name_);
     }
-    // this.products = this.products.filter(p => p.category_id == click.category_id);
   }
 
+
+  increment(e: Event, product: IProduct) {
+    // console.log(product);
+    // this.store.dispatch(addProduct({ product }));
+    this.store.dispatch(reset());
+  }
 
 }
