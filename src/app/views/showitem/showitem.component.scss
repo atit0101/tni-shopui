@@ -1,0 +1,39 @@
+.slider {
+  position: relative;
+  max-width: 100%;
+  margin: auto;
+  overflow: hidden;
+}
+
+.slider-image {
+  // width: 100%;
+  width: 800vw;
+  height: 40vh;
+  object-fit: cover;
+  // display: block;
+}
+
+.bt {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.bt:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.bt:nth-child(1) {
+  left: 10px;
+}
+
+.bt:nth-child(3) {
+  right: 10px;
+}
+

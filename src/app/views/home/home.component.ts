@@ -9,7 +9,8 @@ import { Store } from '@ngrx/store';
 import { IProduct } from '../../interfaces/product';
 import { Observable } from 'rxjs';
 import { addProduct, decrement, reset } from '../../store/actions';
-
+import { isBrowser } from '../../utils/is-browser';
+import { StorageService } from "../../services/storage.service";
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -34,7 +35,8 @@ export class HomeComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private store: Store<{ product: IProduct; }>
+    private store: Store<{ product: IProduct; }>,
+    private storageService: StorageService
   ) {
     this.product$ = store.select('product');
   }
@@ -89,9 +91,13 @@ export class HomeComponent {
 
 
   increment(e: Event, product: IProduct) {
-    // console.log(product);
-    // this.store.dispatch(addProduct({ product }));
-    this.store.dispatch(reset());
+    if (isBrowser()) {
+      this.storageService.setItem('product', JSON.stringify(product));
+      const savedData = this.storageService.getItem('product');
+      console.log('Saved data:', savedData);
+    } else {
+      console.log('localStorage is not available');
+    }
   }
 
 }

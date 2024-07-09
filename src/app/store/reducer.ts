@@ -2,28 +2,32 @@ import { createReducer, on } from "@ngrx/store";
 import { decrement, reset, addProduct } from "./actions";
 import { IProduct } from "../interfaces/product";
 
-export let product: IProduct = {
-  product_id: 0,
-  price: 0,
-  product_name: "",
-  category_id: 0,
-  category: "",
-  images: [],
-  product_data: ""
-};
+// export let products: Array<IProduct> = [];
+export let products: Array<{ product: IProduct, count: number; }> = [];
+export let product: IProduct;
 export const productReducer = createReducer(
-  product,
+  products,
   on(addProduct, (state, { product }) => {
-    console.log(1231231);
+    let [f] = state.filter(e => e.product.product_id == product.product_id);
+    let data;
+    if (f?.count && f?.count != undefined) {
 
-    return state = product;
+      data = state.map(e => {
+        e.count += 1;
+        return e;
+      });
+    } else {
+      data = [...state, { product: product, count: 1 }];
+    }
+    console.log(data);
+
+    return products = data;
   }),
   on(decrement, (state) => {
     return state;
   }),
   on(reset, (state) => {
     console.log(4444);
-
     return state;
   })
 );
