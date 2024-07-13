@@ -6,7 +6,9 @@
       @if(product){
       <div class="slider">
         <button class="bt" (click)="prevImage()">&#10094;</button>
-        <img [src]="imageObject[currentIndex]" alt="Image slider" class="slider-image">
+        <img src="{{imageObject[currentIndex]}}" alt="Image slider" class="slider-image">
+
+        <!-- <img [src]="imageObject[currentIndex]" alt="Image slider" class="slider-image"> -->
         <button class="bt" (click)="nextImage()">&#10095;</button>
       </div>
 

@@ -70,10 +70,10 @@ export class HomeComponent {
         this.products = data.data;
         this.products.map((e: any) => {
           let f = this.images.filter((i: any) => i.product_id === e.product_id);
+          // console.log(f);
+
           e.images = f;
         });
-        // console.log(this.products);
-
       },
       error: (error) => {
         console.log(error);
@@ -92,7 +92,7 @@ export class HomeComponent {
 
   increment(e: Event, product: IProduct) {
     if (isBrowser()) {
-      this.storageService.setItem('product', JSON.stringify(product));
+      this.storageService.setItem('product', JSON.stringify(product.product_id));
       const savedData = this.storageService.getItem('product');
       console.log('Saved data:', savedData);
     } else {
